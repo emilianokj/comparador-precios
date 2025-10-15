@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorSugerencias = document.getElementById('contenedor-sugerencias');
     const formBusqueda = document.getElementById('formulario-busqueda');
 
-    // Estado para guardar el EAN del producto seleccionado por el usuario
-    let eanSeleccionado = null;
+    let nombreSeleccionado = null
     
     // BÚSQUEDA Y SUGERENCIAS (KEYUP) se activa cada vez que el usuario deja de presionar una tecla
     inputBusqueda.addEventListener('keyup', () => {
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Limpiamos sugerencias viejas al escribir algo nuevo
         contenedorSugerencias.innerHTML = ''; 
-        eanSeleccionado = null;
+        nombreSeleccionado = null;
         botonBusqueda.disabled = true;
 
         if (consulta.length < 3) {
@@ -42,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.textContent = sugerencia.nombreCompleto;
             li.dataset.ean = sugerencia.codigoBarra;
+            li.dataset.nombre = sugerencia.nombreCompleto;
             li.classList.add('sugerencia-item');
 
             // Manejador de clic: Cuando el usuario selecciona una sugerencia
@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Rellenar el input
                 inputBusqueda.value = this.textContent;
                 
-                // Guardar el EAN seleccionado
-                eanSeleccionado = this.dataset.ean;
+                // Guardar el nombre seleccionado
+                nombreSeleccionado = this.dataset.nombre
                 
                 // Limpiar y activar el botón de búsqueda
                 contenedorSugerencias.innerHTML = '';
@@ -65,9 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     formBusqueda.addEventListener('submit', (e) => {
         e.preventDefault(); 
         
-        if (eanSeleccionado) {
+        if (nombreSeleccionado) {
             // Redirigir a la página de comparación con el EAN guardado
-            window.location.href = `comparacion-productos.html?ean=${eanSeleccionado}`;
+            const nombreEncoded = encodeURIComponent(nombreSeleccionado);
+            window.location.href = `comparacion-productos.html?nombre=${nombreEncoded}`;
         } else {
              // Si apretan buscar sin seleccionar nada, hacemos una última verificación
             alert('Por favor, selecciona un producto de las sugerencias para comparar.');

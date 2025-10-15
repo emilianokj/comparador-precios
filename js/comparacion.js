@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Obtener el EAN de la URL (ej: ?ean=123456789)
     const urlParams = new URLSearchParams(window.location.search);
-    const codigoBarra = urlParams.get('ean'); 
+    const nombreProducto = urlParams.get('nombre'); 
     
-    if (!codigoBarra) {
+    if (!nombreProducto) {
         return;
     }
     
-    const API_URL = `http://localhost:8080/api/comparacion/${codigoBarra}`;
+    const API_URL = `http://localhost:8080/api/comparacion/nombre?nombre=${nombreProducto}`;
     
     fetch(API_URL)
         .then(response => {
             if (response.status === 404) {
                 // Manejar producto no encontrado
-                return Promise.reject('Producto no encontrado en la base de datos.');
+                return Promise.reject('No se encontraron productos similares para "${nombreProducto}".');
             }
             if (!response.ok) {
                 return Promise.reject('Error en la conexión con el servidor.');
