@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Llamada al endpoint de sugerencias
-        const SUGERENCIAS_API_URL = `http://localhost:8080/api/producto/autocompletar?q=${consulta}`;
+        const SUGERENCIAS_API_URL = `https://comparadordeprecios-2h57.cleverapps.io/api/producto/autocompletar?q=${consulta}`;
         
         fetch(SUGERENCIAS_API_URL)
             .then(response => response.json())

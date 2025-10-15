@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
-    const API_URL = `http://localhost:8080/api/comparacion/nombre?nombre=${nombreProducto}`;
+    const API_URL = `https://comparadordeprecios-2h57.cleverapps.io/api/comparacion/nombre?nombre=${nombreProducto}`;
     
     fetch(API_URL)
         .then(response => {
